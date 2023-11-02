@@ -46,7 +46,7 @@ certbotssl(){
     docker network inspect nginx-proxy &>/dev/null || docker network create -d bridge nginx-proxy
 
     cp nginx/conf/nginx_setup nginx/conf/nginx.conf
-	docker compose up -d
+    docker compose up -d
     sleep 20
     
     local FOLDERS=( "./certbot" "./certbot/www" "./certbot/conf")
@@ -57,12 +57,12 @@ certbotssl(){
     fi
     done
     
-    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email dragos_s@hotmail.com -d ocitest.gotdns.ch --agree-tos --non-interactive
+    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email dragos_s@hotmail.com -d demo.rasbox.app --agree-tos --non-interactive
     sleep 10
-    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email dragos_s@hotmail.com -d euro-invoice.gotdns.ch --agree-tos --non-interactive
+    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email dragos_s@hotmail.com -d euro-invoice.eu --agree-tos --non-interactive
     
     docker compose down
-	cp nginx/conf/nginx_ssl nginx/conf/nginx.conf
+    cp nginx/conf/nginx_ssl nginx/conf/nginx.conf
     
     echocolor "DONE >>> SSL certificates" "BYellow" "Locked"
 }

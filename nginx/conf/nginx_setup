@@ -2,7 +2,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name ocitest.gotdns.ch;
+    server_name demo.rasbox.app;
     server_tokens off;
 
     location /.well-known/acme-challenge/ {
@@ -15,7 +15,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name euro-invoice.gotdns.ch;
+    server_name euro-invoice.eu;
     server_tokens off;
 
     location /.well-known/acme-challenge/ {
