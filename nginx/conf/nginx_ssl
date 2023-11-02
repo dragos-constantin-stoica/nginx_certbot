@@ -1,12 +1,12 @@
-upstream unitybill {
-	server unitybillapp:3000;
+upstream ocitest {
+	server localhost:9090;
 }
 
 server {
     listen 80;
     listen [::]:80;
 
-    server_name unitybill.gotdns.ch;
+    server_name ocitest.gotdns.ch;
     server_tokens off;
 
     location /.well-known/acme-challenge/ {
@@ -14,7 +14,7 @@ server {
     }
 
     location / {
-        return 301 https://unitybill.gotdns.ch$request_uri;
+        return 301 https://ocitest.gotdns.ch$request_uri;
     }
 }
 
@@ -22,15 +22,15 @@ server {
     listen 443 ssl;
     listen [::]:443 ssl ipv6only=on;
 
-    server_name unitybill.gotdns.ch;
+    server_name ocitest.gotdns.ch;
     index index.html index.htm index.nginx-debian.html;
 
-    ssl_certificate /etc/nginx/ssl/live/unitybill.gotdns.ch/fullchain.pem;
-    ssl_certificate_key /etc/nginx/ssl/live/unitybill.gotdns.ch/privkey.pem;
+    ssl_certificate /etc/nginx/ssl/live/ocitest.gotdns.ch/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/live/ocitest.gotdns.ch/privkey.pem;
     
     location / {
-        # Redirect tu UnityBill Application
-        proxy_pass http://unitybill;
+        # Redirect to Risk Accounting Application
+        proxy_pass http://ocitest;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection 'upgrade';

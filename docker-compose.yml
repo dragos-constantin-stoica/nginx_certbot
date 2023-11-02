@@ -15,7 +15,7 @@ services:
       - ./certbot/www/:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
     networks:
-      - net
+      - nginx-proxy
 
   certbot:
     image: certbot/certbot:latest
@@ -27,8 +27,8 @@ services:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
     networks:
-      - net
+      - nginx-proxy
 
 networks:
-  net:
-    driver: bridge
+  nginx-proxy:
+    external: true

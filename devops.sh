@@ -37,16 +37,17 @@ usage(){
     -~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~-~
 "
     echo -e "$__usage"
-	return
 }
 
 # certbot ssl management
 certbotssl(){
     echocolor "Setup SSL certificates from Lets Encrypt using Certbot" "BYellow" "Locked"
 
+    docker network inspect nginx-proxy &>/dev/null || docker network create -d bridge nginx-proxy
+
     cp nginx/conf/nginx_setup nginx/conf/nginx.conf
-		docker compose up -d
-		sleep 20
+	docker compose up -d
+    sleep 20
     
     local FOLDERS=( "./certbot" "./certbot/www" "./certbot/conf")
     for i in "${FOLDERS[@]}"
@@ -56,10 +57,12 @@ certbotssl(){
     fi
     done
     
-    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email ${CERT_EMAIL} -d ${CERT_DOMAIN} --agree-tos --non-interactive
-
+    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email dragos_s@hotmail.com -d ocitest.gotdns.ch --agree-tos --non-interactive
+    sleep 10
+    docker compose run --rm  certbot certonly --webroot --webroot-path /var/www/certbot/ --force-renewal --email dragos_s@hotmail.com -d euro-invoice.gotdns.ch --agree-tos --non-interactive
+    
     docker compose down
-		cp nginx/conf/nginx_ssl nginx/conf/nginx.conf
+	cp nginx/conf/nginx_ssl nginx/conf/nginx.conf
     
     echocolor "DONE >>> SSL certificates" "BYellow" "Locked"
 }
