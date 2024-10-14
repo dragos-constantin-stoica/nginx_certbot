@@ -1,4 +1,3 @@
-version: '3'
 name: nginx_certbot
 services:
 
